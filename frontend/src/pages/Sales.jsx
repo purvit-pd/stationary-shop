@@ -163,7 +163,7 @@ export default function Sales() {
           <DialogContent className="max-w-2xl">
             <DialogHeader><DialogTitle>New Sale / Billing</DialogTitle></DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label>Customer Name</Label>
                   <Input value={form.customer_name} onChange={(e) => setForm({ ...form, customer_name: e.target.value })} />
@@ -178,8 +178,8 @@ export default function Sales() {
                 </div>
               </div>
 
-              <div className="border rounded-lg p-4 space-y-3">
-                <div className="flex items-center gap-3">
+              <div className="border rounded-lg p-3 sm:p-4 space-y-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
                   <Label className="text-sm font-semibold whitespace-nowrap">Select Standard</Label>
                   <Select value={selectedStandard} onChange={(e) => { setSelectedStandard(e.target.value); addStandardBooks(e.target.value); }}>
                     <option value="">All Books (Manual)</option>
@@ -189,17 +189,17 @@ export default function Sales() {
 
                 <Label className="text-sm font-semibold">Items</Label>
                 {form.items.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm bg-gray-50 p-2 rounded">
-                    <span className="flex-1 truncate">{item.book_title}</span>
-                    <div className="w-16">
+                  <div key={idx} className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-sm bg-gray-50 p-2 rounded">
+                    <span className="flex-1 min-w-0 truncate text-xs sm:text-sm">{item.book_title}</span>
+                    <div className="w-14 sm:w-16">
                       <Input type="number" min="1" className="h-7 text-xs" value={item.quantity} onChange={(e) => updateItemQty(idx, e.target.value)} />
                     </div>
-                    <span className="w-16 text-right">₹{item.unit_price}</span>
-                    <span className="w-20 text-right font-medium">₹{(item.quantity * item.unit_price).toFixed(0)}</span>
+                    <span className="w-14 sm:w-16 text-right text-xs sm:text-sm">₹{item.unit_price}</span>
+                    <span className="w-16 sm:w-20 text-right font-medium text-xs sm:text-sm">₹{(item.quantity * item.unit_price).toFixed(0)}</span>
                     <Button type="button" variant="ghost" size="icon" onClick={() => removeItem(idx)}><Trash2 className="h-3 w-3 text-red-500" /></Button>
                   </div>
                 ))}
-                <div className="flex items-end gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-2">
                   <div className="flex-1">
                     <Label className="text-xs">Book (Barcode/Name)</Label>
                     <Select value={newItem.book_id} onChange={(e) => selectBook(e.target.value)}>
@@ -207,33 +207,37 @@ export default function Sales() {
                       {books.map(b => <option key={b.id} value={b.id}>{b.title} {b.barcode ? `(${b.barcode})` : ''} - Stock: {b.stock}</option>)}
                     </Select>
                   </div>
-                  <div className="w-20">
-                    <Label className="text-xs">Qty</Label>
-                    <Input type="number" min="1" value={newItem.quantity} onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })} />
+                  <div className="flex gap-2">
+                    <div className="w-20 sm:w-20">
+                      <Label className="text-xs">Qty</Label>
+                      <Input type="number" min="1" value={newItem.quantity} onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })} />
+                    </div>
+                    <div className="flex-1 sm:w-24">
+                      <Label className="text-xs">Price</Label>
+                      <Input type="number" step="0.01" value={newItem.unit_price} onChange={(e) => setNewItem({ ...newItem, unit_price: e.target.value })} />
+                    </div>
+                    <Button type="button" size="sm" onClick={addItem} className="self-end">Add</Button>
                   </div>
-                  <div className="w-24">
-                    <Label className="text-xs">Price</Label>
-                    <Input type="number" step="0.01" value={newItem.unit_price} onChange={(e) => setNewItem({ ...newItem, unit_price: e.target.value })} />
-                  </div>
-                  <Button type="button" size="sm" onClick={addItem}>Add</Button>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                <div className="space-y-1">
-                  <Label>Discount (₹)</Label>
-                  <Input type="number" className="w-32" value={form.discount} onChange={(e) => setForm({ ...form, discount: e.target.value })} />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+                <div className="flex gap-3 sm:gap-4">
+                  <div className="space-y-1">
+                    <Label>Discount (₹)</Label>
+                    <Input type="number" className="w-28 sm:w-32" value={form.discount} onChange={(e) => setForm({ ...form, discount: e.target.value })} />
+                  </div>
+                  <div className="space-y-1">
+                    <Label>Payment</Label>
+                    <Select value={form.payment_method} onChange={(e) => setForm({ ...form, payment_method: e.target.value })}>
+                      <option value="cash">Cash</option>
+                      <option value="card">Card</option>
+                      <option value="upi">UPI</option>
+                      <option value="credit">Credit</option>
+                    </Select>
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <Label>Payment</Label>
-                  <Select value={form.payment_method} onChange={(e) => setForm({ ...form, payment_method: e.target.value })}>
-                    <option value="cash">Cash</option>
-                    <option value="card">Card</option>
-                    <option value="upi">UPI</option>
-                    <option value="credit">Credit</option>
-                  </Select>
-                </div>
-                <div className="flex-1 text-right">
+                <div className="sm:flex-1 sm:text-right">
                   <p className="text-sm text-gray-500">Subtotal: ₹{subtotal.toFixed(2)}</p>
                   <p className="text-lg font-bold">Total: ₹{grandTotal.toFixed(2)}</p>
                 </div>

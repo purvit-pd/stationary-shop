@@ -76,29 +76,29 @@ export default function Layout({ children }) {
       {sidebarOpen && <div className="fixed inset-0 bg-black/30 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-16 bg-white border-b flex items-center justify-between px-6">
+        <header className="h-14 md:h-16 bg-white border-b flex items-center justify-between px-3 md:px-6">
           <button onClick={() => setSidebarOpen(true)} className="lg:hidden">
             <Menu className="h-5 w-5" />
           </button>
           <div className="hidden lg:block" />
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-3 pr-3 border-r">
-              <Avatar className="h-9 w-9">
-                <AvatarFallback className="bg-primary text-primary-foreground text-sm font-semibold">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="flex items-center gap-2 md:gap-3 pr-2 md:pr-3 border-r">
+              <Avatar className="h-8 w-8 md:h-9 md:w-9">
+                <AvatarFallback className="bg-primary text-primary-foreground text-xs md:text-sm font-semibold">
                   {user?.name?.charAt(0)?.toUpperCase() || 'A'}
                 </AvatarFallback>
               </Avatar>
-              <div className="text-sm leading-tight">
+              <div className="hidden sm:block text-sm leading-tight">
                 <p className="font-medium text-gray-900">{user?.name || 'Admin'}</p>
                 <p className="text-gray-500 text-xs">{user?.email}</p>
               </div>
             </div>
-            <Button variant="outline" size="icon" onClick={handleLogout} title="Logout" className="h-9 w-9 text-muted-foreground hover:text-destructive hover:border-destructive/30 hover:bg-destructive/5">
-              <LogOut className="h-4 w-4" />
+            <Button variant="outline" size="icon" onClick={handleLogout} title="Logout" className="h-8 w-8 md:h-9 md:w-9 text-muted-foreground hover:text-destructive hover:border-destructive/30 hover:bg-destructive/5">
+              <LogOut className="h-3.5 w-3.5 md:h-4 md:w-4" />
             </Button>
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-3 md:p-6">
           {children}
         </main>
       </div>

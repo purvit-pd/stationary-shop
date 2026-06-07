@@ -92,7 +92,7 @@ export default function Purchases() {
           <DialogContent className="max-w-2xl">
             <DialogHeader><DialogTitle>New Purchase</DialogTitle></DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label>Invoice No *</Label>
                   <Input value={form.invoice_no} onChange={(e) => setForm({ ...form, invoice_no: e.target.value })} required />
@@ -110,18 +110,18 @@ export default function Purchases() {
                 </div>
               </div>
 
-              <div className="border rounded-lg p-4 space-y-3">
+              <div className="border rounded-lg p-3 sm:p-4 space-y-3">
                 <Label className="text-sm font-semibold">Items</Label>
                 {form.items.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm bg-gray-50 p-2 rounded">
-                    <span className="flex-1">{item.book_title}</span>
-                    <span>Qty: {item.quantity}</span>
-                    <span>₹{item.unit_cost}</span>
-                    <span className="font-medium">₹{item.quantity * item.unit_cost}</span>
+                  <div key={idx} className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-sm bg-gray-50 p-2 rounded">
+                    <span className="flex-1 min-w-0 truncate text-xs sm:text-sm">{item.book_title}</span>
+                    <span className="text-xs sm:text-sm">Qty: {item.quantity}</span>
+                    <span className="text-xs sm:text-sm">₹{item.unit_cost}</span>
+                    <span className="font-medium text-xs sm:text-sm">₹{item.quantity * item.unit_cost}</span>
                     <Button type="button" variant="ghost" size="icon" onClick={() => removeItem(idx)}><Trash2 className="h-3 w-3 text-red-500" /></Button>
                   </div>
                 ))}
-                <div className="flex items-end gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-2">
                   <div className="flex-1">
                     <Label className="text-xs">Book</Label>
                     <Select value={newItem.book_id} onChange={(e) => {
@@ -132,15 +132,17 @@ export default function Purchases() {
                       {books.map(b => <option key={b.id} value={b.id}>{b.title} (Stock: {b.stock})</option>)}
                     </Select>
                   </div>
-                  <div className="w-20">
-                    <Label className="text-xs">Qty</Label>
-                    <Input type="number" min="1" value={newItem.quantity} onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })} />
+                  <div className="flex gap-2">
+                    <div className="w-20">
+                      <Label className="text-xs">Qty</Label>
+                      <Input type="number" min="1" value={newItem.quantity} onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })} />
+                    </div>
+                    <div className="flex-1 sm:w-24">
+                      <Label className="text-xs">Unit Cost</Label>
+                      <Input type="number" step="0.01" value={newItem.unit_cost} onChange={(e) => setNewItem({ ...newItem, unit_cost: e.target.value })} />
+                    </div>
+                    <Button type="button" size="sm" onClick={addItem} className="self-end">Add</Button>
                   </div>
-                  <div className="w-24">
-                    <Label className="text-xs">Unit Cost</Label>
-                    <Input type="number" step="0.01" value={newItem.unit_cost} onChange={(e) => setNewItem({ ...newItem, unit_cost: e.target.value })} />
-                  </div>
-                  <Button type="button" size="sm" onClick={addItem}>Add</Button>
                 </div>
               </div>
 

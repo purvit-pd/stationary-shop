@@ -94,8 +94,8 @@ export default function Suppliers() {
           <DialogContent className="max-w-lg">
             <DialogHeader><DialogTitle>{editing ? 'Edit Supplier' : 'Add Supplier'}</DialogTitle></DialogHeader>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2 col-span-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2 sm:col-span-2">
                   <Label>Name *</Label>
                   <Input {...register('name')} />
                   {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
@@ -117,7 +117,7 @@ export default function Suppliers() {
                   <Label>GSTIN</Label>
                   <Input {...register('gstin')} />
                 </div>
-                <div className="space-y-2 col-span-2">
+                <div className="space-y-2 sm:col-span-2">
                   <Label>Address</Label>
                   <Textarea {...register('address')} />
                 </div>
