@@ -56,9 +56,9 @@ export default function Login() {
             <div className="text-center text-sm">
               <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
             </div>
-            <div className="text-center text-sm text-gray-500">
+            {/* <div className="text-center text-sm text-gray-500">
               Default: admin@shop.com / admin123
-            </div>
+            </div> */}
           </form>
         </CardContent>
       </Card>
