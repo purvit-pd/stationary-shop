@@ -1,1 +1,1 @@
-# stationary-shop
+# Stationary Shop Project with Node/React(Vite) and PostgreSQL Database
